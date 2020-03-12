@@ -1,23 +1,38 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+        <meta name="description" content="HONOMEDIC CRM">
+		<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+        <meta name="author" content="MC TEAM">
+        <meta name="robots" content="noindex, nofollow">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+        @yield('links')
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+    </head>
 
-                    You are logged in!
-                </div>
-            </div>
+    <body>
+		<!-- Main Wrapper -->
+        <div class="main-wrapper">
+
+			<!-- Header -->
+            @include('layout/header')
+			<!-- /Header -->
+
+			<!-- Sidebar -->
+			@include('layout/sidebar')
+			<!-- /Sidebar -->
+
+			<!-- Page Wrapper -->
+			@yield('contenido')
+			<!-- /Page Wrapper -->
+
         </div>
-    </div>
-</div>
-@endsection
+		<!-- /Main Wrapper -->
+
+
+        @yield('scripts')
+
+    </body>
+</html>

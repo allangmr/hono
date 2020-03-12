@@ -1,12 +1,42 @@
-@extends('plantilla')
+@extends('home')
+
+
+@section('links')
+
+
+    <title>Inicio</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+
+    <!-- Lineawesome CSS -->
+    <link rel="stylesheet" href="assets/css/line-awesome.min.css">
+
+    <!-- Chart CSS -->
+    <link rel="stylesheet" href="assets/plugins/morris/morris.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="assets/js/html5shiv.min.js"></script>
+        <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+@endsection
 
 @section('contenido')
 
     <div class="page-wrapper">
-	
+
 		<!-- Page Content -->
         <div class="content container-fluid">
-		
+
 			<!-- Page Header -->
 			<div class="page-header">
 				<div class="row">
@@ -19,7 +49,7 @@
 				</div>
 			</div>
 			<!-- /Page Header -->
-		
+
 			<div class="row">
 				<div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
 					<div class="card dash-widget">
@@ -66,7 +96,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="row">
 				<div class="col-md-12">
 					<div class="row">
@@ -89,7 +119,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="row">
 				<div class="col-md-12">
 					<div class="card-group m-b-30">
@@ -110,7 +140,7 @@
 								<p class="mb-0">Overall Employees 218</p>
 							</div>
 						</div>
-					
+
 						<div class="card">
 							<div class="card-body">
 								<div class="d-flex justify-content-between mb-3">
@@ -128,7 +158,7 @@
 								<p class="mb-0">Previous Month <span class="text-muted">$1,15,852</span></p>
 							</div>
 						</div>
-					
+
 						<div class="card">
 							<div class="card-body">
 								<div class="d-flex justify-content-between mb-3">
@@ -146,7 +176,7 @@
 								<p class="mb-0">Previous Month <span class="text-muted">$7,500</span></p>
 							</div>
 						</div>
-					
+
 						<div class="card">
 							<div class="card-body">
 								<div class="d-flex justify-content-between mb-3">
@@ -165,9 +195,9 @@
 							</div>
 						</div>
 					</div>
-				</div>	
+				</div>
 			</div>
-			
+
 			<!-- Statistics Widget -->
 			<div class="row">
 				<div class="col-md-12 col-lg-12 col-xl-4 d-flex">
@@ -209,7 +239,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="col-md-12 col-lg-6 col-xl-4 d-flex">
 					<div class="card flex-fill">
 						<div class="card-body">
@@ -247,7 +277,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="col-md-12 col-lg-6 col-xl-4 d-flex">
 					<div class="card flex-fill">
 						<div class="card-body">
@@ -294,7 +324,7 @@
 				</div>
 			</div>
 			<!-- /Statistics Widget -->
-			
+
 			<div class="row">
 				<div class="col-md-6 d-flex">
 					<div class="card card-table flex-fill">
@@ -362,7 +392,7 @@
 							<h3 class="card-title mb-0">Payments</h3>
 						</div>
 						<div class="card-body">
-							<div class="table-responsive">	
+							<div class="table-responsive">
 								<table class="table custom-table table-nowrap mb-0">
 									<thead>
 										<tr>
@@ -411,7 +441,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="row">
 				<div class="col-md-6 d-flex">
 					<div class="card card-table flex-fill">
@@ -725,10 +755,30 @@
 					</div>
 				</div>
 			</div>
-		
+
 		</div>
 		<!-- /Page Content -->
 
     </div>
 
+@endsection
+
+@section('scripts')
+    <!-- jQuery -->
+    <script src="assets/js/jquery-3.2.1.min.js"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+
+    <!-- Slimscroll JS -->
+    <script src="assets/js/jquery.slimscroll.min.js"></script>
+
+    <!-- Chart JS -->
+    <script src="assets/plugins/morris/morris.min.js"></script>
+    <script src="assets/plugins/raphael/raphael.min.js"></script>
+    <script src="assets/js/chart.js"></script>
+
+    <!-- Custom JS -->
+    <script src="assets/js/app.js"></script>
 @endsection

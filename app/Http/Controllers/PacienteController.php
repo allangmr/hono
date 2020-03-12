@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Paciente;
+
 class PacienteController extends Controller
 {
     /**
@@ -17,10 +19,14 @@ class PacienteController extends Controller
         $this->middleware('auth');
     }
 
-    
+
     public function index()
     {
         //
+        $pacientes = Paciente::latest()->paginate(5);
+
+        return view('contenido.pacientes',compact('pacientes'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
 
     }
 
