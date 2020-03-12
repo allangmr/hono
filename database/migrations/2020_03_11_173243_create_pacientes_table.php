@@ -17,8 +17,13 @@ class CreatePacientesTable extends Migration
             $table->id();
             $table->char('nombre', 100);
             $table->date('fec_nacimiento')->nullable();
-            $table->string('cedula',30);
+            $table->string('telefono',30)->nullable();
+            $table->string('direccion',70)->nullable();
+            $table->string('email',60)->nullable()->unique();
+            $table->string('cedula',30)->unique();
+            $table->unsignedBigInteger('id_estado');
             $table->timestamps();
+            $table->foreign('id_estado')->references('id')->on('estado_paciente');
         });
     }
 
