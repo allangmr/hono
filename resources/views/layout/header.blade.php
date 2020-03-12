@@ -18,7 +18,7 @@
 
 	<!-- Header Title -->
     <div class="page-title-box">
-		<h3>Dreamguy's Technologies</h3>
+		<h3>Honomedics</h3>
     </div>
 	<!-- /Header Title -->
 
@@ -34,34 +34,13 @@
 					<i class="fa fa-search"></i>
 			   </a>
 				<form action="search.html">
-					<input class="form-control" type="text" placeholder="Search here">
+					<input class="form-control" type="text" placeholder="Buscar Pacientes">
 					<button class="btn" type="submit"><i class="fa fa-search"></i></button>
 				</form>
 			</div>
 		</li>
 		<!-- /Search -->
 
-		<!-- Flag -->
-		<li class="nav-item dropdown has-arrow flag-nav">
-			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
-				<img src="assets/img/flags/us.png" alt="" height="20"> <span>English</span>
-			</a>
-			<div class="dropdown-menu dropdown-menu-right">
-				<a href="javascript:void(0);" class="dropdown-item">
-					<img src="assets/img/flags/us.png" alt="" height="16"> English
-				</a>
-				<a href="javascript:void(0);" class="dropdown-item">
-					<img src="assets/img/flags/fr.png" alt="" height="16"> French
-				</a>
-				<a href="javascript:void(0);" class="dropdown-item">
-					<img src="assets/img/flags/es.png" alt="" height="16"> Spanish
-				</a>
-				<a href="javascript:void(0);" class="dropdown-item">
-					<img src="assets/img/flags/de.png" alt="" height="16"> German
-				</a>
-			</div>
-		</li>
-		<!-- /Flag -->
 
 		<!-- Notifications -->
 		<li class="nav-item dropdown">
@@ -262,7 +241,7 @@
 				<span>Admin</span>
 			</a>
 			<div class="dropdown-menu">
-				<a class="dropdown-item" href="profile.html">Mi Cuenta</a>
+				<a class="dropdown-item" href="profile.html">Perfil</a>
 				<a class="dropdown-item" href="settings.html">Configuraciones</a>
                 <a class="dropdown-item" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
