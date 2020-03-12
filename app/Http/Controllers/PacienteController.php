@@ -20,10 +20,13 @@ class PacienteController extends Controller
     }
 
 
+
     public function index()
     {
         //
-        $pacientes = Paciente::latest()->paginate(5);
+        $pacientes = Paciente::join('estado_paciente', 'pacientes.id_estado', '=', 'estado_paciente.id')
+        ->select('pacientes.id', 'pacientes.id_estado', 'pacientes.nombre','pacientes.fec_nacimiento','pacientes.telefono', 'pacientes.direccion','pacientes.email','pacientes.cedula','pacientes.id_estado','estado_paciente.id as id_paciente_estado','estado_paciente.descripcion')
+        ->orderby('pacientes.nombre','desc')->paginate(5);
 
         return view('contenido.pacientes',compact('pacientes'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
