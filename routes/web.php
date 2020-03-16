@@ -22,6 +22,7 @@ Route::get('/', function () {
 
 Route::resource('pacientes', 'PacienteController');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/paciente', 'PacienteController@index')->name('paciente');
 
 Auth::routes();
 

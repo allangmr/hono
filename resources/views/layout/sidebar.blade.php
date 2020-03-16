@@ -3,14 +3,10 @@
 		<div id="sidebar-menu" class="sidebar-menu">
 			<ul>
 				<li class="menu-title">
-					<span>Main</span>
+					<span>Opciones Principales</span>
 				</li>
-				<li class="submenu">
-					<a href="#"><i class="la la-dashboard"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
-					<ul style="display: none;">
-						<li><a href="index.html">Admin Dashboard</a></li>
-						<li><a href="employee-dashboard.html">Employee Dashboard</a></li>
-					</ul>
+				<li>
+                    <a href="{{ route('home') }}"><i class="la la-dashboard"></i> <span> Resumen</span></a>
 				</li>
 				<li class="submenu">
 					<a href="#"><i class="la la-cube"></i> <span> Apps</span> <span class="menu-arrow"></span></a>

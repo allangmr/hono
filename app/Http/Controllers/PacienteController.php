@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Paciente;
+use App\Estado;
+
 
 class PacienteController extends Controller
 {
@@ -26,23 +28,12 @@ class PacienteController extends Controller
         //
         $pacientes = Paciente::join('estado_paciente', 'pacientes.id_estado', '=', 'estado_paciente.id')
         ->select('pacientes.id', 'pacientes.id_estado', 'pacientes.nombre','pacientes.fec_nacimiento','pacientes.telefono', 'pacientes.direccion','pacientes.email','pacientes.cedula','pacientes.id_estado','estado_paciente.id as id_paciente_estado','estado_paciente.descripcion')
-        ->orderby('pacientes.nombre','desc')->paginate(5);
+        ->orderby('pacientes.nombre','asc')->paginate(12);
 
         return view('contenido.pacientes',compact('pacientes'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+            ->with('i', (request()->input('page', 1) - 1) * 12);
 
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -51,7 +42,44 @@ class PacienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $identificacion =  $request->input("busc_id");
+        $nombre = $request->input("busc_nombre");
+        $estado = $request->input("busc_estado");
+
+        if($identificacion <> '' || $nombre <> '' || $estado >= 1)
+        {
+
+        }
+        else{
+
+
+
+        $data = request()->validate([
+            'nombre' => 'required',
+            'fec_nacimiento' => 'nullable|date',
+            'telefono' => 'nullable',
+            'direccion' => 'nullable',
+            'email' => 'nullable|email|unique:pacientes',
+            'cedula' => 'required|unique:pacientes',
+            'id_estado' => 'required',
+        ]);
+
+        if($data){
+            $check = Paciente::create($data);
+            $mensaje = 1;
+
+            //return back()->withInput()->with(compact('mensaje'));
+            return redirect()->route('pacientes.index')->with( ['mensaje' => $mensaje] );
+
+        }
+        else{
+
+            $mensaje = "No se pudo crear nada";
+            return back()->withInput();
+
+        }
+
+        }
     }
 
     /**
@@ -62,6 +90,12 @@ class PacienteController extends Controller
      */
     public function show($id)
     {
+        $pacientes_show = Paciente::find($id);
+        $estado = Estado::find($pacientes_show->id_estado);
+        return view('contenido.pacientes.pacientes_show',compact('pacientes_show','estado'));
+        //return back()->withInput();
+        //return redirect()->back()->with(compact('pacientes_show'));
+        //return $pacientes_show ;
         //
     }
 
@@ -74,6 +108,9 @@ class PacienteController extends Controller
     public function edit($id)
     {
         //
+        $pacientes_show = Paciente::find($id);
+        $estado = Estado::find($pacientes_show->id_estado);
+        return view('contenido.pacientes.pacientes_edit',compact('pacientes_show','estado'));
     }
 
     /**

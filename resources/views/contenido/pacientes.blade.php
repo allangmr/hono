@@ -41,52 +41,78 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title">Clients</h3>
+                        <h3 class="page-title">Pacientes</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Clients</li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                            <li class="breadcrumb-item active">Pacientes</li>
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_client"><i class="fa fa-plus"></i> Add Client</a>
-                        <div class="view-icons">
-                            <a href="clients.html" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                            <a href="clients-list.html" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
-                        </div>
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_client"><i class="fa fa-plus"></i> Agregar Paciente</a>
                     </div>
+                    @if($pacientes_show ?? '')
+                        @foreach ($pacientes_show as $paciente_show)
+                            <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">{{ $paciente_show->cedula }}</a></h5>
+                        @endforeach
+                    @endif
                 </div>
             </div>
             <!-- /Page Header -->
-
             <!-- Search Filter -->
+            <form method="POST">
             <div class="row filter-row">
-                <div class="col-sm-6 col-md-3">
-                    <div class="form-group form-focus">
-                        <input type="text" class="form-control floating">
-                        <label class="focus-label">Client ID</label>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group form-focus">
+                            <input type="text" class="form-control floating" name="busc_id">
+                            <label class="focus-label">Identificación</label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="form-group form-focus">
-                        <input type="text" class="form-control floating">
-                        <label class="focus-label">Client Name</label>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group form-focus">
+                            <input type="text" class="form-control floating" name="busc_nombre">
+                            <label class="focus-label">Nombre</label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="form-group form-focus select-focus">
-                        <select class="select floating">
-                            <option>Select Company</option>
-                            <option>Global Technologies</option>
-                            <option>Delta Infotech</option>
-                        </select>
-                        <label class="focus-label">Company</label>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group form-focus select-focus">
+                            <select class="select floating" name="busc_estado">
+                                <option value="0">Seleccione un estado</option>
+                                <option value="1">Activo</option>
+                                <option value="2">En Atención</option>
+                                <option value="3">En Cobros</option>
+                                <option value="4">Cerrado</option>
+                            </select>
+                            <label class="focus-label">Estado</label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <a href="#" class="btn btn-success btn-block"> Search </a>
-                </div>
+                    <div class="col-sm-6 col-md-3">
+                        <button class="btn btn-success btn-block"  type="submit" >Buscar</button>
+                    </div>
             </div>
+            </form>
             <!-- Search Filter -->
+            @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+            @endif
+
+            @if (\Session::has('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Genial!</strong> {{ \Session::get('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
 
             <div class="row staff-grid-row">
 
@@ -95,393 +121,161 @@
                 <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
                     <div class="profile-widget">
                         <div class="profile-img">
-                            <a href="client-profile.html" class="avatar"><img alt="" src="assets/img/profiles/avatar-19.jpg"></a>
+                            <a href="{{ URL::to('pacientes/' . $paciente->id) }}" class="avatar"><img alt="" src="assets/img/profiles/pacientes.png"></a>
                         </div>
                         <div class="dropdown profile-action">
                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                            <a class="dropdown-item"  href="{{ URL::to('pacientes/' . $paciente->id) }}"><i class="fa fa-eye m-r-5"></i> Ver</a>
+                            <a class="dropdown-item" href="{{ URL::to('pacientes/' . $paciente->id .'/edit') }}" ><i class="fa fa-pencil m-r-5"></i> Editar</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Eliminar</a>
                         </div>
                         </div>
-                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">{{ $paciente->nombre }}</a></h4>
-                        <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">{{ $paciente->cedula }}</a></h5>
-                        <div class="small text-muted">CEO</div>
-                        <a href="chat.html" class="btn btn-white btn-sm m-t-10">Message</a>
-                        <a href="client-profile.html" class="btn btn-white btn-sm m-t-10">View Profile</a>
+                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{ URL::to('pacientes/' . $paciente->id) }}">{{ $paciente->nombre }}</a></h4>
+                        <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="{{ URL::to('pacientes/' . $paciente->id) }}">{{ $paciente->cedula }}</a></h5>
+                        <div class="small text-muted">{{ $paciente->descripcion }}</div>
+                        <a href="{{ URL::to('pacientes/' . $paciente->id) }}" class="btn btn-white btn-sm m-t-10">Atenciones</a>
+                        <a href="{{ URL::to('pacientes/' . $paciente->id) }}" class="btn btn-white btn-sm m-t-10">Proced.</a>
                     </div>
                 </div>
                 @endforeach
+            </div>
+            {{ $pacientes->links() }}
+        </div>
+        <!-- /Page Content -->
 
-                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-                    <div class="profile-widget">
-                        <div class="profile-img">
-                            <a href="client-profile.html" class="avatar"><img alt="" src="assets/img/profiles/avatar-19.jpg"></a>
-                        </div>
-                        <div class="dropdown profile-action">
-                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                        </div>
-                        </div>
-                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Global Technologies</a></h4>
-                        <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Barry Cuda</a></h5>
-                        <div class="small text-muted">CEO</div>
-                        <a href="chat.html" class="btn btn-white btn-sm m-t-10">Message</a>
-                        <a href="client-profile.html" class="btn btn-white btn-sm m-t-10">View Profile</a>
+
+        <!-- Show Client Modal -->
+        <div id="show_client" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Información del Paciente</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-                    <div class="profile-widget">
-                        <div class="profile-img">
-                            <a href="client-profile.html" class="avatar"><img alt="" src="assets/img/profiles/avatar-29.jpg"></a>
+                    <div class="modal-body">
+                                <div class="row" id="vista_pacientes">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Nombre Completo</label>
+                                            <input class="form-control" name="show_nombre" type="text" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Fecha de Nacimiento</label>
+                                            <input class="form-control" name="show_fec_nacimiento" value="" type="text" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Telefono</label>
+                                            <input class="form-control" name="show_telefono"  type="text" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Email</label>
+                                            <input class="form-control floating" name="show_email"  type="email" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Direccion Residencial</label>
+                                            <input class="form-control floating"  name="show_direccion"  type="text" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Cédula</label>
+                                            <input class="form-control" name="show_cedula"  type="text" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Estado</label>
+                                            <input class="form-control" name="show_estado"  type="text" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                        <div class="submit-section">
+                            <button type="button" class="btn btn-primary submit-btn"  data-dismiss="modal" aria-label="Close">Cerrar</button>
                         </div>
-                        <div class="dropdown profile-action">
-                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                        </div>
-                        </div>
-                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Delta Infotech</a></h4>
-                        <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Tressa Wexler</a></h5>
-                        <div class="small text-muted">Manager</div>
-                        <a href="chat.html" class="btn btn-white btn-sm m-t-10">Message</a>
-                        <a href="client-profile.html" class="btn btn-white btn-sm m-t-10">View Profile</a>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-                    <div class="profile-widget">
-                        <div class="profile-img">
-                            <a href="client-profile.html" class="avatar"><img src="assets/img/profiles/avatar-07.jpg" alt=""></a>
-                        </div>
-                        <div class="dropdown profile-action">
-                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                        </div>
-                        </div>
-                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Cream Inc</a></h4>
-                        <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Ruby Bartlett</a></h5>
-                        <div class="small text-muted">CEO</div>
-                        <a href="chat.html" class="btn btn-white btn-sm m-t-10">Message</a>
-                        <a href="client-profile.html" class="btn btn-white btn-sm m-t-10">View Profile</a>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-                    <div class="profile-widget">
-                        <div class="profile-img">
-                            <a href="client-profile.html" class="avatar"><img src="assets/img/profiles/avatar-06.jpg" alt=""></a>
-                        </div>
-                        <div class="dropdown profile-action">
-                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                        </div>
-                        </div>
-                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Wellware Company</a></h4>
-                        <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Misty Tison</a></h5>
-                        <div class="small text-muted">CEO</div>
-                        <a href="chat.html" class="btn btn-white btn-sm m-t-10">Message</a>
-                        <a href="client-profile.html" class="btn btn-white btn-sm m-t-10">View Profile</a>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-                    <div class="profile-widget">
-                        <div class="profile-img">
-                            <a href="client-profile.html" class="avatar"><img alt="" src="assets/img/profiles/avatar-14.jpg"></a>
-                        </div>
-                        <div class="dropdown profile-action">
-                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                        </div>
-                        </div>
-                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Mustang Technologies</a></h4>
-                        <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Daniel Deacon</a></h5>
-                        <div class="small text-muted">CEO</div>
-                        <a href="chat.html" class="btn btn-white btn-sm m-t-10">Message</a>
-                        <a href="client-profile.html" class="btn btn-white btn-sm m-t-10">View Profile</a>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-                    <div class="profile-widget">
-                        <div class="profile-img">
-                            <a href="client-profile.html" class="avatar"><img alt="" src="assets/img/profiles/avatar-18.jpg"></a>
-                        </div>
-                        <div class="dropdown profile-action">
-                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                        </div>
-                        </div>
-                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">International Software Inc</a></h4>
-                        <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Walter Weaver</a></h5>
-                        <div class="small text-muted">CEO</div>
-                        <a href="chat.html" class="btn btn-white btn-sm m-t-10">Message</a>
-                        <a href="client-profile.html" class="btn btn-white btn-sm m-t-10">View Profile</a>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-                    <div class="profile-widget">
-                        <div class="profile-img">
-                            <a href="client-profile.html" class="avatar"><img alt="" src="assets/img/profiles/avatar-28.jpg"></a>
-                        </div>
-                        <div class="dropdown profile-action">
-                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                        </div>
-                        </div>
-                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Mercury Software Inc</a></h4>
-                        <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Amanda Warren</a></h5>
-                        <div class="small text-muted">CEO</div>
-                        <a href="chat.html" class="btn btn-white btn-sm m-t-10">Message</a>
-                        <a href="client-profile.html" class="btn btn-white btn-sm m-t-10">View Profile</a>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-                    <div class="profile-widget">
-                        <div class="profile-img">
-                            <a href="client-profile.html" class="avatar"><img alt="" src="assets/img/profiles/avatar-13.jpg"></a>
-                        </div>
-                        <div class="dropdown profile-action">
-                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                        </div>
-                        </div>
-                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Carlson Tech</a></h4>
-                        <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="client-profile.html">Betty Carlson</a></h5>
-                        <div class="small text-muted">CEO</div>
-                        <a href="chat.html" class="btn btn-white btn-sm m-t-10">Message</a>
-                        <a href="client-profile.html" class="btn btn-white btn-sm m-t-10">View Profile</a>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /Page Content -->
+        <!-- /Show Client Modal -->
 
         <!-- Add Client Modal -->
         <div id="add_client" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Add Client</h5>
+                        <h5 class="modal-title">Nuevo Paciente</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form method="POST">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">First Name <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text">
+                                        <label class="col-form-label">Nombre Completo<span class="text-danger">*</span></label>
+                                        <input class="form-control" id="nombre" name="nombre" type="text" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Last Name</label>
-                                        <input class="form-control" type="text">
+                                        <label class="col-form-label">Fecha de Nacimiento</label>
+                                        <input class="form-control" id="fec_nacimiento" name="fec_nacimiento" type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Username <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text">
+                                        <label class="col-form-label">Telefono</label>
+                                        <input class="form-control" id="telefono"  name="telefono" type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                        <input class="form-control floating" type="email">
+                                        <label class="col-form-label">Email</label>
+                                        <input class="form-control floating" id="email" name="email" type="email">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Password</label>
-                                        <input class="form-control" type="password">
+                                        <label class="col-form-label">Direccion Residencial</label>
+                                        <input class="form-control floating"  id="direccion" name="direccion" type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Confirm Password</label>
-                                        <input class="form-control" type="password">
+                                        <label class="col-form-label">Cédula<span class="text-danger">*</span></label>
+                                        <input class="form-control" id="cedula" name="cedula" required type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Client ID <span class="text-danger">*</span></label>
-                                        <input class="form-control floating" type="text">
+                                        <label class="col-form-label">Estado<span class="text-danger">*</span></label>
+                                        <div class="form-group form-focus select-focus">
+                                            <select id="id_estado" name="id_estado" required class="select floating">
+                                                <option value="1">Activo</option>
+                                                <option value="2">En Atención</option>
+                                                <option value="3">En Cobros</option>
+                                                <option value="4">Cerrado</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Phone </label>
-                                        <input class="form-control" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Company Name</label>
-                                        <input class="form-control" type="text">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="table-responsive m-t-15">
-                                <table class="table table-striped custom-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Module Permission</th>
-                                            <th class="text-center">Read</th>
-                                            <th class="text-center">Write</th>
-                                            <th class="text-center">Create</th>
-                                            <th class="text-center">Delete</th>
-                                            <th class="text-center">Import</th>
-                                            <th class="text-center">Export</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Projects</td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tasks</td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Chat</td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Estimates</td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Invoices</td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Timing Sheets</td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
                             <div class="submit-section">
-                                <button class="btn btn-primary submit-btn">Submit</button>
+                                <input class="btn btn-primary submit-btn"  type="reset" value="Limpiar formulario">
+                                <button class="btn btn-success submit-btn"  type="submit" >Enviar</button>
                             </div>
                         </form>
                     </div>
@@ -495,214 +289,67 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit Client</h5>
+                        <h5 class="modal-title">Editar Paciente</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form method="POST">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">First Name <span class="text-danger">*</span></label>
-                                        <input class="form-control" value="Barry" type="text">
+                                        <label class="col-form-label">Nombre Completo<span class="text-danger">*</span></label>
+                                        <input class="form-control" id="nombre" name="nombre" type="text" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Last Name</label>
-                                        <input class="form-control" value="Cuda" type="text">
+                                        <label class="col-form-label">Fecha de Nacimiento</label>
+                                        <input class="form-control" id="fec_nacimiento" name="fec_nacimiento" type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Username <span class="text-danger">*</span></label>
-                                        <input class="form-control" value="barrycuda" type="text">
+                                        <label class="col-form-label">Telefono</label>
+                                        <input class="form-control" id="telefono"  name="telefono" type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                        <input class="form-control floating" value="barrycuda@example.com" type="email">
+                                        <label class="col-form-label">Email</label>
+                                        <input class="form-control floating" id="email" name="email" type="email">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Password</label>
-                                        <input class="form-control" value="barrycuda" type="password">
+                                        <label class="col-form-label">Direccion Residencial</label>
+                                        <input class="form-control floating"  id="direccion" name="direccion" type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Confirm Password</label>
-                                        <input class="form-control" value="barrycuda" type="password">
+                                        <label class="col-form-label">Cédula<span class="text-danger">*</span></label>
+                                        <input class="form-control" id="cedula" name="cedula" required type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Client ID <span class="text-danger">*</span></label>
-                                        <input class="form-control floating" value="CLT-0001" type="text">
+                                        <div class="form-group form-focus select-focus">
+                                            <select class="select floating">
+                                                <option>Select Company</option>
+                                                <option>Global Technologies</option>
+                                                <option>Delta Infotech</option>
+                                            </select>
+                                            <label class="focus-label">Company</label>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Phone </label>
-                                        <input class="form-control" value="9876543210" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Company Name</label>
-                                        <input class="form-control" type="text" value="Global Technologies">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="table-responsive m-t-15">
-                                <table class="table table-striped custom-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Module Permission</th>
-                                            <th class="text-center">Read</th>
-                                            <th class="text-center">Write</th>
-                                            <th class="text-center">Create</th>
-                                            <th class="text-center">Delete</th>
-                                            <th class="text-center">Import</th>
-                                            <th class="text-center">Export</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Projects</td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tasks</td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Chat</td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Estimates</td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Invoices</td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Timing Sheets</td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                            <td class="text-center">
-                                                <input checked="" type="checkbox">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
                             <div class="submit-section">
-                                <button class="btn btn-primary submit-btn">Save</button>
+                                <input class="btn btn-primary submit-btn"  type="reset" value="Limpiar formulario">
+                                <button class="btn btn-success submit-btn"  type="submit" >Enviar</button>
                             </div>
                         </form>
                     </div>
@@ -743,6 +390,7 @@
 @section('scripts')
     <!-- jQuery -->
     <script src="assets/js/jquery-3.2.1.min.js"></script>
+    <script src="assets/js/jquery.inputmask.min.js"></script>
 
     <!-- Bootstrap Core JS -->
     <script src="assets/js/popper.min.js"></script>
@@ -756,4 +404,15 @@
 
     <!-- Custom JS -->
     <script src="assets/js/app.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $(".alert").delay(4000).slideUp(200, function() {
+                $(this).alert('close');
+            });
+            $("#fec_nacimiento").inputmask("9999/99/99",{ "placeholder": "aaaa/mm/dd" });
+
+        });
+    </script>
+
 @endsection
