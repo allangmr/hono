@@ -78,23 +78,47 @@
                                             <ul class="personal-info">
                                                 <li>
                                                     <span class="title">Telefono:</span>
-                                                    <span class="text"><a href="">{{ $pacientes_show->telefono }}</a></span>
+                                                    <span class="text">
+                                                        @if($pacientes_show->telefono ?? '')
+                                                            <a href="">{{ $pacientes_show->telefono }}</a>
+                                                        @else
+                                                            Desconocido
+                                                        @endif
+                                                    </span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Correo Electrónico:</span>
-                                                    <span class="text"><a href="">{{ $pacientes_show->email }}</a></span>
+                                                    <span class="text">
+                                                        @if($pacientes_show->email ?? '')
+                                                            <a href="">{{ $pacientes_show->email }}</a>
+                                                        @else
+                                                            Desconocido
+                                                        @endif
+                                                    </span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Fecha de Nacimiento:</span>
-                                                    <span class="text">{{ $pacientes_show->fec_nacimiento }}</span>
+                                                    <span class="text">
+                                                        @if($pacientes_show->fec_nacimiento ?? '')
+                                                            {{ $pacientes_show->fec_nacimiento }}
+                                                        @else
+                                                            Desconocida
+                                                        @endif
+                                                    </span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Direccion:</span>
-                                                    <span class="text">{{ $pacientes_show->direccion }}</span>
+                                                    <span class="text">
+                                                    @if($pacientes_show->direccion ?? '')
+                                                        {{ $pacientes_show->direccion }}
+                                                    @else
+                                                        Desconocida
+                                                    @endif
+                                                    </span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Numero de Paciente:</span>
-                                                    <span class="text">{{ $pacientes_show->id }}</span>
+                                                    <span class="text"> {{ $pacientes_show->id }}</span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -164,12 +188,12 @@
                                                 </div>
                                             </div>
                                             <div class="project-members m-b-15">
-                                                <div>Doctor :</div>
-                                                <ul class="team-members">
-                                                    <li>
-                                                        <a href="#" data-toggle="tooltip" title="Dr. Sandoval"><img alt="" src="/assets/img/profiles/avatar-16.jpg">Dr. Sandoval</a>
-                                                    </li>
-                                                </ul>
+                                                <div class="sub-title">
+                                                    Doctor:
+                                                </div>
+                                                <div class="text-muted">
+                                                    Dr. Sandoval
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

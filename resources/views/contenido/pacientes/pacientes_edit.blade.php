@@ -78,23 +78,47 @@
                                             <ul class="personal-info">
                                                 <li>
                                                     <span class="title">Telefono:</span>
-                                                    <span class="text"><a href="">{{ $pacientes_show->telefono }}</a></span>
+                                                    <span class="text">
+                                                        @if($pacientes_show->telefono ?? '')
+                                                            <a href="">{{ $pacientes_show->telefono }}</a>
+                                                        @else
+                                                            Desconocido
+                                                        @endif
+                                                    </span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Correo Electrónico:</span>
-                                                    <span class="text"><a href="">{{ $pacientes_show->email }}</a></span>
+                                                    <span class="text">
+                                                        @if($pacientes_show->email ?? '')
+                                                            <a href="">{{ $pacientes_show->email }}</a>
+                                                        @else
+                                                            Desconocido
+                                                        @endif
+                                                    </span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Fecha de Nacimiento:</span>
-                                                    <span class="text">{{ $pacientes_show->fec_nacimiento }}</span>
+                                                    <span class="text">
+                                                        @if($pacientes_show->fec_nacimiento ?? '')
+                                                            {{ $pacientes_show->fec_nacimiento }}
+                                                        @else
+                                                            Desconocida
+                                                        @endif
+                                                    </span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Direccion:</span>
-                                                    <span class="text">{{ $pacientes_show->direccion }}</span>
+                                                    <span class="text">
+                                                    @if($pacientes_show->direccion ?? '')
+                                                        {{ $pacientes_show->direccion }}
+                                                    @else
+                                                        Desconocida
+                                                    @endif
+                                                    </span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Numero de Paciente:</span>
-                                                    <span class="text">{{ $pacientes_show->id }}</span>
+                                                    <span class="text"> {{ $pacientes_show->id }}</span>
                                                 </li>
                                             </ul>
                                         </div>
