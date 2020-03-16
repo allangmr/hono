@@ -531,8 +531,8 @@ table.dataTable thead > tr > td.sorting {
 .btn-primary.active,
 .btn-primary:active,
 .open > .dropdown-toggle.btn-primary {
-	background-color: #ff851a;
-	border: 1px solid #ff851a;
+	background-color: #054de4;
+	border: 1px solid #054de4;
 }
 .btn-primary.active.focus,
 .btn-primary.active:focus,
@@ -543,14 +543,14 @@ table.dataTable thead > tr > td.sorting {
 .open > .dropdown-toggle.btn-primary.focus,
 .open > .dropdown-toggle.btn-primary:focus,
 .open > .dropdown-toggle.btn-primary:hover {
-	background-color: #ff851a;
-	border: 1px solid #ff851a;
+	background-color: #054de4;
+	border: 1px solid #054de4;
 }
 .btn-primary.active:not(:disabled):not(.disabled),
 .btn-primary:active:not(:disabled):not(.disabled),
 .show > .btn-primary.dropdown-toggle {
-	background-color: #ff851a;
-	border-color: #ff851a;
+	background-color: #054de4;
+	border-color: #054de4;
 	color: #fff;
 }
 .btn-primary.active:focus:not(:disabled):not(.disabled),
@@ -1603,8 +1603,8 @@ table.dataTable thead > tr > td.sorting {
 .add-btn:hover,
 .add-btn:focus,
 .add-btn:active {
-	background-color: #ff851a;
-	border: 1px solid #ff851a;
+	background-color: #3979ff;
+	border: 1px solid #3979ff;
     color: #fff;
 }
 .add-btn i {
@@ -3418,7 +3418,7 @@ table.dataTable thead > tr > td.sorting {
 	color: #054de4;
 }
 .add-more a:hover {
-	color: #ff851a;
+	color: #054de4;
 }
 .avatar-box {
     float: left;
