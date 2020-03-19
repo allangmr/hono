@@ -68,9 +68,9 @@
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="profile-info-left">
-                                                <h3 class="user-name m-t-0">{{ $pacientes_show->nombre }}</h3>
+                                                <h3 class="user-name m-t-0">{{ $pacientes_edit->nombre }}</h3>
                                                 <div class="staff-id">{{ $estado->descripcion }}</div>
-                                                <div class="staff-id">Cédula : {{ $pacientes_show->cedula }}</div>
+                                                <div class="staff-id">Cédula : {{ $pacientes_edit->cedula }}</div>
                                                 <div class="staff-msg"><a href="{{ route('pacientes.index') }}" class="btn btn-custom">Ver todos los pacientes</a></div>
                                             </div>
                                         </div>
@@ -79,8 +79,8 @@
                                                 <li>
                                                     <span class="title">Telefono:</span>
                                                     <span class="text">
-                                                        @if($pacientes_show->telefono ?? '')
-                                                            <a href="">{{ $pacientes_show->telefono }}</a>
+                                                        @if($pacientes_edit->telefono ?? '')
+                                                            <a href="">{{ $pacientes_edit->telefono }}</a>
                                                         @else
                                                             Desconocido
                                                         @endif
@@ -89,8 +89,8 @@
                                                 <li>
                                                     <span class="title">Correo Electrónico:</span>
                                                     <span class="text">
-                                                        @if($pacientes_show->email ?? '')
-                                                            <a href="">{{ $pacientes_show->email }}</a>
+                                                        @if($pacientes_edit->email ?? '')
+                                                            <a href="">{{ $pacientes_edit->email }}</a>
                                                         @else
                                                             Desconocido
                                                         @endif
@@ -99,8 +99,8 @@
                                                 <li>
                                                     <span class="title">Fecha de Nacimiento:</span>
                                                     <span class="text">
-                                                        @if($pacientes_show->fec_nacimiento ?? '')
-                                                            {{ $pacientes_show->fec_nacimiento }}
+                                                        @if($pacientes_edit->fec_nacimiento ?? '')
+                                                            {{ date('d-m-Y', strtotime($pacientes_edit->fec_nacimiento)) }}
                                                         @else
                                                             Desconocida
                                                         @endif
@@ -109,8 +109,8 @@
                                                 <li>
                                                     <span class="title">Direccion:</span>
                                                     <span class="text">
-                                                    @if($pacientes_show->direccion ?? '')
-                                                        {{ $pacientes_show->direccion }}
+                                                    @if($pacientes_edit->direccion ?? '')
+                                                        {{ $pacientes_edit->direccion }}
                                                     @else
                                                         Desconocida
                                                     @endif
@@ -118,7 +118,7 @@
                                                 </li>
                                                 <li>
                                                     <span class="title">Numero de Paciente:</span>
-                                                    <span class="text"> {{ $pacientes_show->id }}</span>
+                                                    <span class="text"> {{ $pacientes_edit->id }}</span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -146,207 +146,63 @@
                 <div id="bank_statutory" class="pro-overview tab-pane fade show active">
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="card-title"> Basic Salary Information</h3>
-                            <form>
+                            <h3 class="card-title"> Editar Paciente</h3>
+                            <form method="POST">
+                                @csrf
                                 <div class="row">
-                                    <div class="col-sm-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="col-form-label">Salary basis <span class="text-danger">*</span></label>
-                                            <select class="select">
-                                                <option>Select salary basis type</option>
-                                                <option>Hourly</option>
-                                                <option>Daily</option>
-                                                <option>Weekly</option>
-                                                <option>Monthly</option>
-                                            </select>
-                                       </div>
+                                            <label class="col-form-label">Nombre Completo</label>
+                                        <input class="form-control" id="nombre" value="{{old('nombre',$pacientes_edit->nombre)}}" name="nombre" type="text" required>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="col-form-label">Salary amount <small class="text-muted">per month</small></label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">$</span>
-                                                </div>
-                                                <input type="text" class="form-control" placeholder="Type your salary amount" value="0.00">
+                                            <label class="col-form-label">Fecha de Nacimiento</label>
+                                            <input class="form-control" id="fec_nacimiento" value="{{old('fec_nacimiento')}}" name="fec_nacimiento" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Telefono</label>
+                                            <input class="form-control" id="telefono"  value="{{old('telefono')}}" name="telefono" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Email</label>
+                                            <input class="form-control floating" id="email" value="{{old('email')}}" name="email" type="email">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Dirección Residencial</label>
+                                            <input class="form-control floating"  id="direccion" value="{{old('direccion')}}" name="direccion" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Cédula</label>
+                                            <input class="form-control" id="cedula" value="{{old('cedula')}}" name="cedula" required type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Estado</label>
+                                            <div class="form-group form-focus select-focus">
+                                                <select id="id_estado" name="id_estado" value="{{old('id_estado')}}" required class="select floating">
+                                                    <option value="1">Activo</option>
+                                                    <option value="2">En Atención</option>
+                                                    <option value="3">En Cobros</option>
+                                                    <option value="4">Cerrado</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Payment type</label>
-                                            <select class="select">
-                                                <option>Select payment type</option>
-                                                <option>Bank transfer</option>
-                                                <option>Check</option>
-                                                <option>Cash</option>
-                                            </select>
-                                       </div>
-                                    </div>
                                 </div>
-                                <hr>
-                                <h3 class="card-title"> PF Information</h3>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">PF contribution</label>
-                                            <select class="select">
-                                                <option>Select PF contribution</option>
-                                                <option>Yes</option>
-                                                <option>No</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">PF No. <span class="text-danger">*</span></label>
-                                            <select class="select">
-                                                <option>Select PF contribution</option>
-                                                <option>Yes</option>
-                                                <option>No</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Employee PF rate</label>
-                                            <select class="select">
-                                                <option>Select PF contribution</option>
-                                                <option>Yes</option>
-                                                <option>No</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Additional rate <span class="text-danger">*</span></label>
-                                            <select class="select">
-                                                <option>Select additional rate</option>
-                                                <option>0%</option>
-                                                <option>1%</option>
-                                                <option>2%</option>
-                                                <option>3%</option>
-                                                <option>4%</option>
-                                                <option>5%</option>
-                                                <option>6%</option>
-                                                <option>7%</option>
-                                                <option>8%</option>
-                                                <option>9%</option>
-                                                <option>10%</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Total rate</label>
-                                            <input type="text" class="form-control" placeholder="N/A" value="11%">
-                                        </div>
-                                    </div>
-                               </div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Employee PF rate</label>
-                                            <select class="select">
-                                                <option>Select PF contribution</option>
-                                                <option>Yes</option>
-                                                <option>No</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Additional rate <span class="text-danger">*</span></label>
-                                            <select class="select">
-                                                <option>Select additional rate</option>
-                                                <option>0%</option>
-                                                <option>1%</option>
-                                                <option>2%</option>
-                                                <option>3%</option>
-                                                <option>4%</option>
-                                                <option>5%</option>
-                                                <option>6%</option>
-                                                <option>7%</option>
-                                                <option>8%</option>
-                                                <option>9%</option>
-                                                <option>10%</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Total rate</label>
-                                            <input type="text" class="form-control" placeholder="N/A" value="11%">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <hr>
-                                <h3 class="card-title"> ESI Information</h3>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">ESI contribution</label>
-                                            <select class="select">
-                                                <option>Select ESI contribution</option>
-                                                <option>Yes</option>
-                                                <option>No</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">ESI No. <span class="text-danger">*</span></label>
-                                            <select class="select">
-                                                <option>Select ESI contribution</option>
-                                                <option>Yes</option>
-                                                <option>No</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Employee ESI rate</label>
-                                            <select class="select">
-                                                <option>Select ESI contribution</option>
-                                                <option>Yes</option>
-                                                <option>No</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Additional rate <span class="text-danger">*</span></label>
-                                            <select class="select">
-                                                <option>Select additional rate</option>
-                                                <option>0%</option>
-                                                <option>1%</option>
-                                                <option>2%</option>
-                                                <option>3%</option>
-                                                <option>4%</option>
-                                                <option>5%</option>
-                                                <option>6%</option>
-                                                <option>7%</option>
-                                                <option>8%</option>
-                                                <option>9%</option>
-                                                <option>10%</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Total rate</label>
-                                            <input type="text" class="form-control" placeholder="N/A" value="11%">
-                                        </div>
-                                    </div>
-                               </div>
-
                                 <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn" type="submit">Save</button>
+                                    <input class="btn btn-primary submit-btn"  type="reset" value="Limpiar formulario">
+                                    <button class="btn btn-success submit-btn"  type="submit" >Enviar</button>
                                 </div>
                             </form>
                         </div>
