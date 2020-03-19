@@ -63,7 +63,7 @@
             <div class="row filter-row">
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus">
-                            <input type="text" class="form-control floating" name="busc_id">
+                            <input type="text" class="form-control floating" name="busc_id" value="">
                             <label class="focus-label">Identificación</label>
                         </div>
                     </div>
@@ -145,69 +145,6 @@
         <!-- /Page Content -->
 
 
-        <!-- Show Client Modal -->
-        <div id="show_client" class="modal custom-modal fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Información del Paciente</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                                <div class="row" id="vista_pacientes">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Nombre Completo</label>
-                                            <input class="form-control" name="show_nombre" type="text" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Fecha de Nacimiento</label>
-                                            <input class="form-control" name="show_fec_nacimiento" value="" type="text" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Telefono</label>
-                                            <input class="form-control" name="show_telefono"  type="text" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Email</label>
-                                            <input class="form-control floating" name="show_email"  type="email" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Direccion Residencial</label>
-                                            <input class="form-control floating"  name="show_direccion"  type="text" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Cédula</label>
-                                            <input class="form-control" name="show_cedula"  type="text" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Estado</label>
-                                            <input class="form-control" name="show_estado"  type="text" readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                        <div class="submit-section">
-                            <button type="button" class="btn btn-primary submit-btn"  data-dismiss="modal" aria-label="Close">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /Show Client Modal -->
 
         <!-- Add Client Modal -->
         <div id="add_client" class="modal custom-modal fade" role="dialog">
@@ -249,7 +186,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Direccion Residencial</label>
+                                        <label class="col-form-label">Dirección Residencial</label>
                                         <input class="form-control floating"  id="direccion" name="direccion" type="text">
                                     </div>
                                 </div>
@@ -284,79 +221,6 @@
         </div>
         <!-- /Add Client Modal -->
 
-        <!-- Edit Client Modal -->
-        <div id="edit_client" class="modal custom-modal fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Editar Paciente</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="POST">
-                            @csrf
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Nombre Completo<span class="text-danger">*</span></label>
-                                        <input class="form-control" id="nombre" name="nombre" type="text" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Fecha de Nacimiento</label>
-                                        <input class="form-control" id="fec_nacimiento" name="fec_nacimiento" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Telefono</label>
-                                        <input class="form-control" id="telefono"  name="telefono" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Email</label>
-                                        <input class="form-control floating" id="email" name="email" type="email">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Direccion Residencial</label>
-                                        <input class="form-control floating"  id="direccion" name="direccion" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Cédula<span class="text-danger">*</span></label>
-                                        <input class="form-control" id="cedula" name="cedula" required type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <div class="form-group form-focus select-focus">
-                                            <select class="select floating">
-                                                <option>Select Company</option>
-                                                <option>Global Technologies</option>
-                                                <option>Delta Infotech</option>
-                                            </select>
-                                            <label class="focus-label">Company</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="submit-section">
-                                <input class="btn btn-primary submit-btn"  type="reset" value="Limpiar formulario">
-                                <button class="btn btn-success submit-btn"  type="submit" >Enviar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /Edit Client Modal -->
 
         <!-- Delete Client Modal -->
         <div class="modal custom-modal fade" id="delete_client" role="dialog">
@@ -410,7 +274,7 @@
             $(".alert").delay(4000).slideUp(200, function() {
                 $(this).alert('close');
             });
-            $("#fec_nacimiento").inputmask("9999/99/99",{ "placeholder": "aaaa/mm/dd" });
+            $("#fec_nacimiento").inputmask("99/99/9999",{ "placeholder": "dd/mm/aaaa" });
 
         });
     </script>
