@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Paciente;
 use App\Estado;
-
+use App\Atencion;
+use App\Procedimiento;
+use Carbon\Carbon;
 
 class PacienteController extends Controller
 {
@@ -51,9 +53,6 @@ class PacienteController extends Controller
 
         }
         else{
-
-
-
         $data = request()->validate([
             'nombre' => 'required',
             'fec_nacimiento' => 'nullable|date',
@@ -65,7 +64,16 @@ class PacienteController extends Controller
         ]);
 
         if($data){
-            $check = Paciente::create($data);
+
+            $check = Paciente::create([
+                'nombre' => $request->input('nombre'),
+                'fec_nacimiento' => Carbon::createFromFormat( 'd/m/Y', $request->input('fec_nacimiento')),
+                'telefono' => $request->input('telefono'),
+                'direccion' => $request->input('direccion'),
+                'email' => $request->input('email'),
+                'cedula' => $request->input('cedula'),
+                'id_estado' => $request->input('id_estado')
+            ]);
             $mensaje = 1;
 
             //return back()->withInput()->with(compact('mensaje'));
@@ -92,7 +100,14 @@ class PacienteController extends Controller
     {
         $pacientes_show = Paciente::find($id);
         $estado = Estado::find($pacientes_show->id_estado);
-        return view('contenido.pacientes.pacientes_show',compact('pacientes_show','estado'));
+        //$atenciones = Atencion::all();
+        $atenciones = Atencion::where('id_pacientes', $id)
+               ->orderBy('fec_inicio', 'desc')
+               ->take(4)
+               ->get();
+
+        return view('contenido.pacientes.pacientes_show',compact('pacientes_show','estado', 'atenciones'));
+
         //return back()->withInput();
         //return redirect()->back()->with(compact('pacientes_show'));
         //return $pacientes_show ;
@@ -108,9 +123,9 @@ class PacienteController extends Controller
     public function edit($id)
     {
         //
-        $pacientes_show = Paciente::find($id);
-        $estado = Estado::find($pacientes_show->id_estado);
-        return view('contenido.pacientes.pacientes_edit',compact('pacientes_show','estado'));
+        $pacientes_edit = Paciente::find($id);
+        $estado = Estado::find($pacientes_edit->id_estado);
+        return view('contenido.pacientes.pacientes_edit',compact('pacientes_edit','estado'));
     }
 
     /**
