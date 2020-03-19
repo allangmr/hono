@@ -15,10 +15,10 @@ class CreateAtencionesTable extends Migration
     {
         Schema::create('atenciones', function (Blueprint $table) {
             $table->id();
-            $table->string('hospital', 20)->nullable();
+            $table->string('hospital', 60)->nullable();
             $table->dateTime('fec_inicio')->nullable();
             $table->dateTime('fec_fin')->nullable();
-            $table->boolean('estado');
+            $table->boolean('estado')->default(3);
             $table->unsignedBigInteger('id_pacientes');
             $table->unsignedBigInteger('id_doctores');
             $table->timestamps();
